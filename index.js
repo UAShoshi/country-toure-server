@@ -28,6 +28,7 @@ async function run() {
     // await client.connect();
 
     const tourCollection = client.db("tourDB").collection('tour');
+    const userCollection = client.db("tourDB").collection('user');
 
     app.get('/tour', async(req, res) =>{
       const cursor = tourCollection.find();
@@ -75,6 +76,14 @@ async function run() {
       const query = { _id: new ObjectId (id) }
       const result = await tourCollection.deleteOne(query);
       res.send(result);
+    })
+
+     // user releted apis
+     app.post('/user', async(req, res) => {
+      const user = req.body;
+      console.log(user);
+      const result = await userCollection.insertOne(user);
+      res.send(result)
     })
 
     // Send a ping to confirm a successful connection
