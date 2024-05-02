@@ -79,11 +79,31 @@ async function run() {
     })
 
      // user releted apis
+
+     app.get('/user', async(req, res) =>{
+      const cursor = userCollection.find();
+      const users = await cursor.toArray();
+      res.send(users);
+    })
+
      app.post('/user', async(req, res) => {
       const user = req.body;
       console.log(user);
       const result = await userCollection.insertOne(user);
       res.send(result)
+    })
+
+
+    app.patch('/user', async(req, res) =>{
+      const user = req.body;
+      const filter = { email: user.email }
+      const updateDoc = {
+        $set:{
+          lastLoginAt: user.lastLoginAt
+        }
+      }
+      const result = await userCollection.updateOne(filter, updateDoc);
+      res.send(result);
     })
 
     // Send a ping to confirm a successful connection
