@@ -76,6 +76,8 @@ async function run() {
       const result = await tourCollection.updateOne(filter, tour, options);
       res.send(result);
     })
+
+    
     app.delete('/tour/:id', async(req, res) =>{
       const id = req.params.id;
       const query = { _id: new ObjectId (id) }
